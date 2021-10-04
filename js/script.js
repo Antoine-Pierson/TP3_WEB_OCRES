@@ -32,6 +32,27 @@ function start(city) {
       // Affiche une erreur
       console.error(error);
     });
+
+  apiWeather
+    .fetchThreeDayForecast()
+    .then(function(response) {
+      // Récupère la donnée d'une API
+      const data = response.data;
+
+      let arr = data.list;
+
+      for(let i = 0; i < arr.length; i++){
+        document.getElementById('today' + i + '-forecast-main' ).innerHTML = arr[i].weather[0].main;
+        document.getElementById('today' + i + '-forecast-more-info').innerHTML = arr[i].weather[0].description;
+        document.getElementById('icon' + i + '-weather-container').innerHTML = apiWeather.getHTMLElementFromIcon(arr[i].weather[0].icon);
+        document.getElementById('today' + i + '-forecast-temp').innerHTML = `${arr[i].temp.day}°C`;
+      }
+      
+    })
+    .catch(function(error) {
+      // Affiche une erreur
+      console.error(error);
+    });
 }
 
 function changeCity() {
